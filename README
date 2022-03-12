@@ -1,0 +1,4 @@
+Simple app for searching items on website.
+Parts number are inside excel file (excel.xlsx) column D.
+
+I use beautiful_soup for scrapping site and openpyxl for open and read data from excel column.
