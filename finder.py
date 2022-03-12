@@ -1,25 +1,27 @@
 from bs4 import BeautifulSoup
 import requests
 import re
+from excloader import get_col_value
 
-# PAGE = 1
-# &page={PAGE}
 
-part = str(input("Podaj numer: "))
-url = f"https://www.iparts.pl/znajdz/?idCar=&query={part}"
+PARTS = get_col_value()
 
-page = requests.get(url).text
 
-doc = BeautifulSoup(page, "html.parser")
+def find_parts():
+    for part in PARTS:
+        url = f"https://www.iparts.pl/znajdz/?idCar=&query={part}"
 
-div = doc.find(class_="katalog-lista row")
-item = div.find(text=re.compile(part))
+        info = requests.get(url).text
 
-# items_l = items.split(' ')
-#
-# print(items_l)
-print(item)
+        doc = BeautifulSoup(info, "html.parser")
 
-parent = item.find_parent(class_="produkt middle-12")
+        div = doc.find(class_="katalog-lista row")
+        item = div.find_all(text=re.compile(part))
+
+        print(item)
+        print("--------")
+
+
+find_parts()
 
 
